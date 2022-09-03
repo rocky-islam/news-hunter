@@ -163,6 +163,6 @@ const toggleSpinner = isLoading => {
     }
 }
 
-loadCategories();
 
+loadCategories();
 showCategory("05",'Entertainment');
