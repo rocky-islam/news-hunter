@@ -1,50 +1,63 @@
 
 const loadCategories = () =>{
+    toggleSpinner(true);
     const url = "https://openapi.programming-hero.com/api/news/categories";
     fetch(url)
         .then((res) => res.json())
-        .then((data) => displayCategory(data.data.news_category));
+        .then((data) => displayCategory(data.data.news_category))
+        .catch(error => alert(error.message));
 }
 const displayCategory = category =>{
     
     const categoryList = document.getElementById("category-list");
-        toggleSpinner(true);
+        
     // console.log(category.length);
     for(const categories of category){
-        console.log(categories);
+        // console.log(categories);
         
         const li= document.createElement('li');
         li.innerHTML = `
-            <a onclick="showCategory('${categories.category_id}')" class="nav-link text-black" href="#">${categories.category_name}</a>
+            <a onclick="showCategory('${categories.category_id}','${categories.category_name}')" class="nav-link text-black category-link" href="#">${categories.category_name}</a>
         `;
         
         categoryList.appendChild(li);
         
     }
-    
+    toggleSpinner(false);
     
 }
 
-const showCategory= id =>{
+const showCategory= (id, name )=>{
+    toggleSpinner(true);
+    
     const url = `https://openapi.programming-hero.com/api/news/category/${id}`;
     fetch(url)
-        .then((res) => res.json())
-        .then((data) => ShowNews(data.data));
+      .then((res) => res.json())
+      .then((data) => ShowNews(data.data, name))
+      .catch((error) => alert(error.message));
 }
 
-const ShowNews = newses =>{
+const ShowNews = (newses, name) =>{
     
     console.log(newses);
+
+    const countItem = document.getElementById("count-item");
+    countItem.innerText = `
+        ${newses.length} item found for this category ${name}
+    
+    `;
+
     const noData = document.getElementById('no-data');
     if(newses.length === 0){
         noData.classList.remove('d-none')
     }
     else{
         noData.classList.add("d-none");
+        newses.sort((a, b) => b.total_view - a.total_view);
     }
     const newsList = document.getElementById('show-news');
     newsList.textContent ='';
-
+    
     newses.forEach(news => {
         console.log(news);
         const div = document.createElement('div');
@@ -58,7 +71,7 @@ const ShowNews = newses =>{
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title"> ${news.title} </h5> <br />
-                                <p class="card-text">${(news.details = news.details.slice(0, 250))}</p>
+                                <p class="card-text">${(news.details = news.details.slice(0, 250))}...</p>
                                 
                             </div>
                             <div class="card-body mt-5">
@@ -115,7 +128,8 @@ const showDetails = newsId =>{
     const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
     fetch(url)
       .then((res) => res.json())
-      .then((data) => showNewsDetails(data.data[0]));
+      .then((data) => showNewsDetails(data.data[0]))
+      .catch((error) => alert(error.message));
 }
 
 const showNewsDetails = singleNewsId =>{
@@ -136,14 +150,17 @@ const showNewsDetails = singleNewsId =>{
 
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
+    const loaderNews = document.getElementById("show-news");
     if(isLoading){
         loaderSection.classList.remove('d-none');
+        loaderNews.classList.add('d-none');
     }
     else{
+        loaderNews.classList.remove('d-none');
         loaderSection.classList.add('d-none');
     }
 }
 
 loadCategories();
 
-showCategory("05");
+showCategory("05",'Entertainment');
