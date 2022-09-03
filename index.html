@@ -68,18 +68,38 @@
         </section>
 
         <!-- loader -->
-         <section id="loader" class="d-none text-primary mt-5 mb-5" style="height: 220px; ;">
-             <div class="d-flex justify-content-center">
-                 <div class="spinner-border" role="status">
-                     <span class="visually-hidden">Loading...</span>
-                 </div>
-             </div>
-         </section>
+            <section id="loader" class="d-none text-primary mt-5 mb-5" style="height: 220px;">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </section>
 
         <!-- item count -->
         <section class="container">
             <div class="p-4 my-4 bg-white">
                 <h4 id="count-item"></h4>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <p class="fw-semibold mx-3 d-inline">Sort By View :</p>
+                    <select class="w-25 form-select form-select-sm d-inline" aria-label=".form-select-sm example">
+                        <option selected>Default</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-md-6 ms-auto">
+                    <div class="float-end">
+                        <button class="btn btn-primary">Todays Pick</button>
+                        <button class="btn btn-outline-primary">Trending</button>
+                    </div>
+                </div>
             </div>
         </section>
 

@@ -39,7 +39,7 @@ const showCategory= (id, name )=>{
 
 const ShowNews = (newses, name) =>{
     
-    console.log(newses);
+    // console.log(newses);
 
     const countItem = document.getElementById("count-item");
     countItem.innerText = `
@@ -59,7 +59,7 @@ const ShowNews = (newses, name) =>{
     newsList.textContent ='';
     
     newses.forEach(news => {
-        console.log(news);
+        // console.log(news);
         const div = document.createElement('div');
         // div.classList.add("card");
         div.innerHTML = `
@@ -133,9 +133,9 @@ const showDetails = newsId =>{
 }
 
 const showNewsDetails = singleNewsId =>{
-    console.log(singleNewsId);
+    // console.log(singleNewsId);
     const modalTitle = document.getElementById("newsModalLabel");
-    console.log(singleNewsId.title);
+    // console.log(singleNewsId.title);
     modalTitle.innerText = singleNewsId.title;
 
     const newsDetails = document.getElementById("news-details");
@@ -144,6 +144,8 @@ const showNewsDetails = singleNewsId =>{
         <img src="${singleNewsId.image_url}" class="img-fluid" alt="...">
         <br/>
         <p class="my-5">${singleNewsId.details}</p>
+        <p class="my-5"> Author Name: ${singleNewsId.author.name ? singleNewsId.author.name : 'N/A' }</p>
+        <p class="my-5"> Total View: ${singleNewsId.total_view ? singleNewsId.total_view : 'N/A' }</p>
     `;
     
 }
