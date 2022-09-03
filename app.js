@@ -1,31 +1,39 @@
+
 const loadCategories = () =>{
     const url = "https://openapi.programming-hero.com/api/news/categories";
     fetch(url)
-      .then((res) => res.json())
-      .then((data) => displayCategory(data.data.news_category));
+        .then((res) => res.json())
+        .then((data) => displayCategory(data.data.news_category));
 }
 const displayCategory = category =>{
-
+    
     const categoryList = document.getElementById("category-list");
+        toggleSpinner(true);
     // console.log(category.length);
     for(const categories of category){
         console.log(categories);
+        
         const li= document.createElement('li');
         li.innerHTML = `
             <a onclick="showCategory('${categories.category_id}')" class="nav-link text-black" href="#">${categories.category_name}</a>
         `;
+        
         categoryList.appendChild(li);
+        
     }
+    
+    
 }
 
 const showCategory= id =>{
     const url = `https://openapi.programming-hero.com/api/news/category/${id}`;
     fetch(url)
-      .then((res) => res.json())
-      .then((data) => ShowNews(data.data));
+        .then((res) => res.json())
+        .then((data) => ShowNews(data.data));
 }
 
 const ShowNews = newses =>{
+    
     console.log(newses);
     const noData = document.getElementById('no-data');
     if(newses.length === 0){
@@ -36,6 +44,7 @@ const ShowNews = newses =>{
     }
     const newsList = document.getElementById('show-news');
     newsList.textContent ='';
+
     newses.forEach(news => {
         console.log(news);
         const div = document.createElement('div');
@@ -98,6 +107,7 @@ const ShowNews = newses =>{
         newsList.appendChild(div);
         
     });
+    toggleSpinner(false);
 
 }
 
@@ -123,12 +133,17 @@ const showNewsDetails = singleNewsId =>{
     `;
     
 }
+
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if(isLoading){
+        loaderSection.classList.remove('d-none');
+    }
+    else{
+        loaderSection.classList.add('d-none');
+    }
+}
+
 loadCategories();
 
-// ShowNews(01);
-
-showCategory('05');
-
-// displayCategory('01')
-
-// 
+showCategory("05");
